@@ -1,5 +1,5 @@
 import Testing
-@testable import LinkedList1
+@testable import LippertAlgorithms
 
 @Test func linkedList1() async throws {
     // Swift Testing Documentation

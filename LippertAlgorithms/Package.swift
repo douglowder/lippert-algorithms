@@ -9,19 +9,19 @@ let package = Package(
         // Products define the executables and libraries a package produces, making them visible to other packages.
         .library(
             name: "LippertAlgorithms",
-            targets: ["LinkedList1"]
+            targets: ["LippertAlgorithms"]
         ),
     ],
     targets: [
         // Targets are the basic building blocks of a package, defining a module or a test suite.
         // Targets can depend on other targets in this package and products from dependencies.
         .target(
-            name: "LinkedList1",
+            name: "LippertAlgorithms",
             swiftSettings: []
         ),
         .testTarget(
             name: "LippertAlgorithmsTests",
-            dependencies: ["LinkedList1"],
+            dependencies: ["LippertAlgorithms"],
             swiftSettings: []
         ),
     ]
