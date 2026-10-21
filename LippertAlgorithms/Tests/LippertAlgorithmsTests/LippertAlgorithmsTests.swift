@@ -49,8 +49,11 @@ import Testing
     try stack.pop()
   })
 
-
-
-
-
+  var stack2: Stack<Int> = .empty
+  stack2 = stack2.push(1)
+  stack2 = stack2.push(2)
+  var iterator = stack2.makeIterator()
+  #expect(iterator.next() == 2)
+  #expect(iterator.next() == 1)
+  #expect(iterator.next() == nil)
 }

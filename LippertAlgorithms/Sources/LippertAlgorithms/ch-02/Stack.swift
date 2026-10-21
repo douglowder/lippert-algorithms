@@ -39,14 +39,20 @@ public indirect enum Stack<T> {
   }
 }
 
+extension Stack: Sequence, IteratorProtocol {
+  public mutating func next() -> T? {
+    switch self {
+    case let .node(value, tail):
+      self = tail
+      return value
+    default:
+      return nil
+    }
+  }
+}
+
 extension Stack: CustomStringConvertible {
   public var description: String {
-    var s = ""
-    var list = self
-    while case let .node(value, tail) = list {
-      s += String(describing: value)
-      list = tail
-    }
-    return s
+    return self.map{ String(describing: $0) }.joined()
   }
 }
