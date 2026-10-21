@@ -26,3 +26,31 @@ import Testing
   #expect(list.description == "123")
   #expect(LinkedList1Enum<Int>.empty.reverse().isEmpty)
 }
+
+@Test func stack() async throws {
+  var stack: Stack<Int> = .empty
+  #expect(throws: StackError("Cannot peek into an empty stack"), performing: {
+    try stack.peek()
+  })
+  #expect(throws: StackError("Cannot pop from an empty stack"), performing: {
+    try stack.pop()
+  })
+  stack = stack.push(1)
+  stack = stack.push(2)
+  stack = stack.push(3)
+  #expect(!stack.isEmpty)
+  #expect(stack.description == "321")
+  stack = try stack.pop()
+  #expect(stack.description == "21")
+  stack = try stack.pop()
+  #expect(stack.description == "1")
+  stack = try stack.pop()
+  #expect(throws: StackError("Cannot pop from an empty stack"), performing: {
+    try stack.pop()
+  })
+
+
+
+
+
+}
