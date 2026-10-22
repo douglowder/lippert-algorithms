@@ -46,7 +46,7 @@ import Testing
 }
 
 @Test func queue() async throws {
-  var queue: Queue<Int> = Queue.empty()
+  var queue: Queue<Int> = Queue.empty
   queue = queue.enqueue(1)
   queue = queue.enqueue(2)
   #expect(queue.description == "12")

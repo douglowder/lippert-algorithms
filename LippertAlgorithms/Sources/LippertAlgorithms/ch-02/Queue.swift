@@ -5,7 +5,7 @@ public struct QueueError: Error, CustomStringConvertible, Equatable {
   public init(_ description: String) { self.description = description }
 }
 
-public class Queue<T> {
+public struct Queue<T> {
 
   private let enqueues: Stack<T>
   private let dequeues: Stack<T>
@@ -15,8 +15,10 @@ public class Queue<T> {
     self.dequeues = dequeues
   }
 
-  public static func empty() -> Queue<T> {
-    return Queue(.empty, .empty)
+  public static var empty: Queue<T> {
+    get {
+      return Queue(.empty, .empty)
+    }
   }
   
   public var isEmpty: Bool {
@@ -48,7 +50,7 @@ public class Queue<T> {
       return Queue(self.enqueues, dequeues)
     }
     if self.enqueues.isEmpty {
-      return Queue.empty()
+      return Queue.empty
     }
     for item in self.enqueues {
       dequeues = dequeues.push(item)
@@ -57,32 +59,19 @@ public class Queue<T> {
   }
 }
 
-extension Queue: Sequence {
-  public func makeIterator() -> some IteratorProtocol<T> {
-    return QueueIterator(self)
-  }
-}
-
-internal class QueueIterator<T>: Sequence, IteratorProtocol {
-  func next() -> T? {
-    if self.queue.isEmpty {
+extension Queue: Sequence, IteratorProtocol {
+  public typealias Element = T
+  public mutating func next() -> T? {
+    if self.isEmpty {
       return nil
     }
     do {
-      let value = try self.queue.peek()
-      self.queue = try self.queue.dequeue()
+      let value = try self.peek()
+      self = try self.dequeue()
       return value
     } catch {
       return nil
     }
-  }
-  
-  typealias Element = T
-
-  private var queue: Queue<T>
-
-  required init(_ queue: Queue<T>) {
-    self.queue = queue
   }
 }
 
