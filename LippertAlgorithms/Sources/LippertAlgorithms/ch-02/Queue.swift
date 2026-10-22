@@ -57,8 +57,14 @@ public class Queue<T> {
   }
 }
 
-public class QueueIterator<T>: Sequence, IteratorProtocol {
-  public func next() -> T? {
+extension Queue: Sequence {
+  public func makeIterator() -> some IteratorProtocol<T> {
+    return QueueIterator(self)
+  }
+}
+
+internal class QueueIterator<T>: Sequence, IteratorProtocol {
+  func next() -> T? {
     if self.queue.isEmpty {
       return nil
     }
@@ -71,13 +77,17 @@ public class QueueIterator<T>: Sequence, IteratorProtocol {
     }
   }
   
-  public typealias Element = T
+  typealias Element = T
 
   private var queue: Queue<T>
 
   required init(_ queue: Queue<T>) {
     self.queue = queue
   }
+}
 
-
+extension Queue: CustomStringConvertible {
+  public var description: String {
+    return self.map{ String(describing: $0) }.joined()
+  }
 }

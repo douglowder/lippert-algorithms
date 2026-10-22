@@ -62,7 +62,19 @@ import Testing
   var queue: Queue<Int> = Queue.empty()
   queue = queue.enqueue(1)
   queue = queue.enqueue(2)
+  #expect(queue.description == "12")
   #expect(try queue.peek() == 1)
   queue = try queue.dequeue()
   #expect(try queue.peek() == 2)
+  queue = queue.enqueue(3)
+  #expect(try queue.peek() == 2)
+  #expect(queue.description == "23")
+  queue = try queue.dequeue()
+  queue = try queue.dequeue()
+  #expect(throws: QueueError.self, performing: {
+    try queue.dequeue()
+  })
+  #expect(throws: QueueError.self, performing: {
+    try queue.peek()
+  })
 }
