@@ -57,3 +57,12 @@ import Testing
   #expect(iterator.next() == 1)
   #expect(iterator.next() == nil)
 }
+
+@Test func queue() async throws {
+  var queue: Queue<Int> = Queue.empty()
+  queue = queue.enqueue(1)
+  queue = queue.enqueue(2)
+  #expect(try queue.peek() == 1)
+  queue = try queue.dequeue()
+  #expect(try queue.peek() == 2)
+}
