@@ -27,6 +27,7 @@ import Testing
   stack = stack.push(3)
   #expect(!stack.isEmpty)
   #expect(stack.description == "321")
+  #expect(Array(stack) == [3, 2, 1])
   stack = try stack.pop()
   #expect(stack.description == "21")
   stack = try stack.pop()
@@ -56,6 +57,7 @@ import Testing
   queue = queue.enqueue(3)
   #expect(try queue.peek() == 2)
   #expect(queue.description == "23")
+  #expect(Array(queue) == [2, 3])
   queue = try queue.dequeue()
   queue = try queue.dequeue()
   #expect(throws: QueueError.self, performing: {

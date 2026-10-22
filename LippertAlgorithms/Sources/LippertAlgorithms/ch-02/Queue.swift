@@ -60,18 +60,13 @@ public struct Queue<T> {
 }
 
 extension Queue: Sequence, IteratorProtocol {
-  public typealias Element = T
   public mutating func next() -> T? {
     if self.isEmpty {
       return nil
     }
-    do {
-      let value = try self.peek()
-      self = try self.dequeue()
-      return value
-    } catch {
-      return nil
-    }
+    let value = try! self.peek()
+    self = try! self.dequeue()
+    return value
   }
 }
 
