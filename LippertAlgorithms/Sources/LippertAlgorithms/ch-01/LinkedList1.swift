@@ -1,54 +1,37 @@
-import Foundation
+public indirect enum LinkedList1<T> {
+  case empty
+  case node(T, LinkedList1<T>)
 
-public class LinkedList1<T>: CustomStringConvertible {
-  public var description: String {
-    get {
-      var s = ""
-      var list: LinkedList1<T> = self
-      while !list.isEmpty() {
-        let valueString = String(describing: list.value)
-        s = s + valueString
-        list = list.tail!
-      }
-      return s
+  public var isEmpty: Bool {
+    if case .empty = self {
+      return true
     }
-  }
-
-  var value: T?
-  var tail: LinkedList1<T>?
-
-  internal init() {
-    self.value = nil
-    self.tail = nil
-  }
-
-  public required init(_ value: T?, _ tail: LinkedList1<T>) {
-    self.value = value
-    self.tail = tail
-  }
-
-  public static func empty() -> LinkedList1<T> {
-    return LinkedList1<T>()
-  }
-
-  public func isEmpty() -> Bool {
-    return value == nil && tail == nil
+    return false
   }
 
   public func push(_ value: T) -> LinkedList1<T> {
-    return LinkedList1<T>(value, self)
+    return .node(value, self)
   }
 
   public func reverse() -> LinkedList1<T> {
-    var result = LinkedList1.empty()
-    var list: LinkedList1<T> = self
-    while !list.isEmpty() {
-      if let identifier = list.value {
-          result = result.push(identifier)
-      }
-      list = list.tail!
+    var result = LinkedList1<T>.empty
+    var list = self
+    while case let .node(value, tail) = list {
+      result = result.push(value)
+      list = tail
     }
     return result
   }
+}
 
+extension LinkedList1: CustomStringConvertible {
+  public var description: String {
+    var s = ""
+    var list = self
+    while case let .node(value, tail) = list {
+      s += String(describing: value)
+      list = tail
+    }
+    return s
+  }
 }
